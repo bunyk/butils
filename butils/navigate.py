@@ -13,11 +13,11 @@ class Location(object):
 def whereis(ob):
     l = Location()
     try:
-        l.filename = inspect.getsourcefile()
+        l.filename = inspect.getsourcefile(ob)
     except TypeError:
         pass
     try:
-        l.line_no = inspect.getsourcelines()[1]
+        l.line_no = inspect.getsourcelines(ob)[1]
     except IOError:
         pass
     return l
