@@ -5,13 +5,12 @@ setup(
     packages = [
         'butils',
     ],
-    version = "0.0.1",
+    version = "0.0.2",
     description = "Python utils library",
     author = "Taras Bunyk",
     author_email = "tbunyk@gmail.com",
     url = "https://github.com/bunyk/butils",
-    license='LICENSE',
-    #download_url = "link to tgz",
+    license='PUBLIC',
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
