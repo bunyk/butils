@@ -21,4 +21,3 @@ def whereis(ob):
     except IOError:
         pass
     return l
-
