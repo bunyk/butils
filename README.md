@@ -25,3 +25,5 @@ Contents
 - `butils.from_where_called()` - returns location in code from where function which calles this is called
 - `butils.add_watched_attribute(name, watch_get=False)` - when called in class (for example `add_watched_attribute('name')`) - instances of that class will log every change to the attribute. And log every access if `watch_get` is `True`.
 - `butils.watch_for_output(condition=lambda x: True, stream='stdout')` - log location in code where some output is performed.
+- `butils.bpython_once()` - First call starts bpython interactive session. Second - stops program`
+- `butils.func_to_dict` - converts function of one hashable argument to dictionary-like object which "contains" all it returning values.
