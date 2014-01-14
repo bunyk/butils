@@ -6,8 +6,14 @@ This is package of my python utils useful in debugging or for performing other t
 Installation
 ------------
 
+Normal:
 ```
 pip install https://github.com/bunyk/butils/archive/master.zip
+```
+
+Development-mode: clone this repository somewhere, and then inside it's directory run:
+```
+python setup.py develop
 ```
 
 
