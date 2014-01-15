@@ -6,4 +6,4 @@ class func_to_dict(object):
         self.f = f
 
     def __getitem__(self, key):
-        return f(key)
+        return f.f(key)
