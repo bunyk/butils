@@ -1,16 +1,20 @@
 import inspect
 
 class Location(object):
-    filename = None
-    line_no = None
+    def __init__(self, filename=None, line_no=None):
+        self.filename = filename
+        self.line_no = line_no
 
     def __str__(self):
         return 'At %s:%s' % (
             self.filename or 'unknown',
             self.line_no or 'unknown'
         )
+    __repr__ = __str__
 
 def whereis(ob):
+    if inspect.isgenerator(ob):
+        ob = ob.gi_code # TODO: fix bug in inspect
     l = Location()
     try:
         l.filename = inspect.getsourcefile(ob)

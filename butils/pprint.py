@@ -75,6 +75,7 @@ class Printer(object):
     bordered = False
     max_width = None
     outfile = sys.stdout
+    color = None
 
     def __call__(self, *args):
         out = []
@@ -85,19 +86,16 @@ class Printer(object):
             if self.bordered:
                 item = bordered(item)
             out.append(item)
-        print(' '.join(out), file=self.outfile)
+        out = ' '.join(out)
+        if self.color:
+            out = self.color_code(self.color) + out + self.color_code('white')
+        print(out, file=self.outfile)
 
     def color_code(self, name):
-        return '\033[%sm' % colors[name]
-
-    def set_color(self, name):
-        self._color = name
-        print(self.color_code(name), sep='', end='')
-
-    def get_color(self):
-        return self._color
-
-    color = property(get_color, set_color)
+        if name in colors:
+            return '\033[%sm' % colors[name]
+        else:
+            return ''
 
     @classmethod
     def get_console_width():
