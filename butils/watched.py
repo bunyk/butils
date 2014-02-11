@@ -25,16 +25,20 @@ def add_watched_attribute(name, watch_get=False):
     sys._getframe(1).f_locals[name] = property(attr_watch_get, attr_watch_set)
 
 
-def watch_for_output(condition=lambda x: True, stream='stdout'):
-    original_stream = getattr(sys, stream)
+def watch_for_output(condition=lambda x: True, out_stream=None):
+    out_stream = out_stream or sys.stderr
 
     class NewStream(object):
-        def write(self, txt):
-            original_stream.write(txt)
-            if condition(txt):
-                original_stream.write(from_where_called() + '\n')
+        def __init__(self, stream):
+            self.stream = stream
 
-    setattr(sys, stream, NewStream())
+        def write(self, txt):
+            self.stream.write(txt)
+            if condition(txt):
+                out_stream.write(from_where_called() + '\n')
+
+    sys.stdout = NewStream(sys.stdout)
+    sys.stderr = NewStream(sys.stderr)
 
 
 def log_lines():
