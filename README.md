@@ -28,3 +28,4 @@ Contents
 - `butils.bpython_once()` - First call starts bpython interactive session. Second - stops program`
 - `butils.func_to_dict` - converts function of one hashable argument to dictionary-like object which "contains" all it returning values.
 - `butils.pprint` - pprint values wrapped into frame. Also return first passed value unchanged (useful when debugging expressions).
+- `butils.decorators.cached_for(seconds)` - decorator which caches function results for `seconds` number of seconds.

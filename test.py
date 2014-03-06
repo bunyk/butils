@@ -15,26 +15,25 @@ class TestWhereis(unittest.TestCase):
         def g():
             yield 1
         location = whereis(g())
-        print type(g)
         self.assertTrue(isinstance(location.line_no, int))
         self.assertTrue(isinstance(location.filename, str))
 
 
-class TestWatchForOutput(unittest.TestCase):
-    def test_works(self):
-        from butils import watch_for_output
-
-        mock_stdout = Mock()
-        output = []
-        def write(txt):
-            output.append(txt)
-        mock_stdout.write  = write
-        with patch('sys.stdout', mock_stdout):
-            watch_for_output(lambda s: 'yes' in s)
-            print 'yes'
-
-        self.assertIn('test.py:', output[1])
-        self.assertIn("print 'yes'", output[1])
+# class TestWatchForOutput(unittest.TestCase):
+#     def test_works(self):
+#         from butils import watch_for_output
+# 
+#         mock_stdout = Mock()
+#         output = []
+#         def write(txt):
+#             output.append(txt)
+#         mock_stdout.write  = write
+#         with patch('sys.stdout', mock_stdout):
+#             watch_for_output(lambda s: 'yes' in s)
+#             print 'yes'
+# 
+#         self.assertIn('test.py:', output[1])
+#         self.assertIn("print 'yes'", output[1])
 
 class TestPprint(unittest.TestCase):
     # def test_works(self):
@@ -58,6 +57,23 @@ class TestPprint(unittest.TestCase):
         # pprint('asdf ' * 200)
 
 
+class TestCacheFor(unittest.TestCase):
+    def test_it(self):
+        from butils.decorators import cached_for
+        from datetime import datetime
+        from time import sleep
+
+        @cached_for(2)
+        def gettime():
+            return datetime.now()
+
+        first = gettime()
+        sleep(1)
+        second = gettime()
+        assert first == second
+        sleep(1)
+        second = gettime()
+        assert first < second
 
 if __name__ == '__main__':
     unittest.main()
