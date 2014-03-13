@@ -31,6 +31,25 @@ def xml(text):
     tree = minidom.parseString(text)
     print(highlight(tree.toprettyxml(), XmlLexer(), TerminalFormatter()))
     return text
+    
+def patch_minidom():
+    ''' Because default version outputs to much whitespace '''
+
+    def writexml_text(self, writer, indent='', addindent='', newl=''):
+        text = self.data.strip()
+        if text:
+            minidom._write_data(writer, "%s%s%s" % (indent, text, newl))
+
+    minidom.Text.writexml = writexml_text
+
+
+def format_xml(filename):
+    ''' Make xml file `filename` nicely indented '''
+    patch_minidom()
+    xml = minidom.parse(filename)
+    with open(filename, "wb") as f:
+        f.write(xml.toprettyxml(indent='  '))
+
 
 def print_diff(a, b):
     raise NotImplementedError
