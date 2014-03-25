@@ -43,12 +43,12 @@ def patch_minidom():
     minidom.Text.writexml = writexml_text
 
 
-def format_xml(filename):
+def format_xml(filename, indent='    '):
     ''' Make xml file `filename` nicely indented '''
     patch_minidom()
     xml = minidom.parse(filename)
     with open(filename, "wb") as f:
-        f.write(xml.toprettyxml(indent='  '))
+        f.write(xml.toprettyxml(indent=indent))
 
 
 def print_diff(a, b):
